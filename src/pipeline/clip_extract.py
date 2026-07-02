@@ -35,15 +35,15 @@ from pathlib import Path
 # Config
 # ---------------------------------------------------------------------------
 
-AUDIO_DIR = Path(__file__).parent / "audio"
+AUDIO_DIR = Path(__file__).parent.parent.parent / "audio"
 CLIPS_DIR = AUDIO_DIR / "clips"
 CV_INDEX = AUDIO_DIR / "common_voice_word_index.csv"
-OUTPUT_DIR = Path(__file__).parent / "output"
+OUTPUT_DIR = Path(__file__).parent.parent.parent / "output"
 
 MIN_CONFIDENCE = 0.4  # minimum alignment confidence to accept a clip
 PAD_SECONDS = 0.04  # padding around extracted word (40ms each side)
 
-from core.romanize import romanize  # noqa: E402 — shared transliteration
+from src.core.romanize import romanize  # noqa: E402 — shared transliteration
 
 
 # ---------------------------------------------------------------------------

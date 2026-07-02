@@ -34,8 +34,8 @@ load_dotenv()
 # Dictionary lookup (kaikki.org — no API calls)
 # ---------------------------------------------------------------------------
 
-DICTIONARY_PATH = Path(__file__).parent / "sources" / "dictionaries" / "mk_kaikki_dictionary.json"
-ENGLISH_INDEX_PATH = Path(__file__).parent / "sources" / "dictionaries" / "mk_english_reverse_index.json"
+DICTIONARY_PATH = Path(__file__).parent.parent.parent / "sources" / "dictionaries" / "mk_kaikki_dictionary.json"
+ENGLISH_INDEX_PATH = Path(__file__).parent.parent.parent / "sources" / "dictionaries" / "mk_english_reverse_index.json"
 
 _dictionary_cache: dict | None = None
 _english_index_cache: dict | None = None
@@ -363,7 +363,7 @@ Rules:
 - Do not include explanations.
 """
 
-OUTPUT_DIR = Path(__file__).parent / "output"
+OUTPUT_DIR = Path(__file__).parent.parent.parent / "output"
 
 
 # ---------------------------------------------------------------------------
@@ -473,7 +473,7 @@ def classify(client: OpenAI, english: str, macedonian: str) -> dict:
 # CSV helpers
 # ---------------------------------------------------------------------------
 
-from core.files import latest_export  # noqa: E402 — shared file finder
+from src.core.files import latest_export  # noqa: E402 — shared file finder
 
 
 def list_to_notion_string(items: list) -> str:

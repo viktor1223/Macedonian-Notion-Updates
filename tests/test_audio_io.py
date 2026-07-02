@@ -8,7 +8,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from core.audio_io import load_audio, save_clip, get_duration
+from src.core.audio_io import load_audio, save_clip, get_duration
 
 
 def test_save_and_load_clip(tmp_path):

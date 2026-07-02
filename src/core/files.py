@@ -4,8 +4,10 @@ File discovery utilities — find latest timestamped output files.
 
 from pathlib import Path
 
-OUTPUT_DIR = Path(__file__).parent.parent / "output"
-AUDIO_DIR = Path(__file__).parent.parent / "audio"
+# Project root is two levels up from src/core/
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+OUTPUT_DIR = PROJECT_ROOT / "output"
+AUDIO_DIR = PROJECT_ROOT / "audio"
 
 
 def latest_file(pattern: str, directory: Path = OUTPUT_DIR) -> Path | None:

@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from core.romanize import romanize, latinize, is_cyrillic, MK_CYRILLIC_TO_LATIN
+from src.core.romanize import romanize, latinize, is_cyrillic, MK_CYRILLIC_TO_LATIN
 
 
 def test_romanize_basic_words():

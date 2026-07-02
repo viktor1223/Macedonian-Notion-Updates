@@ -23,9 +23,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from core.notion_client import get_token, query_database, DATABASE_ID  # shared Notion client
+from src.core.notion_client import get_token, query_database, DATABASE_ID  # shared Notion client
 
-OUTPUT_DIR = Path(__file__).parent / "output"
+OUTPUT_DIR = Path(__file__).parent.parent.parent / "output"
 
 
 # ---------------------------------------------------------------------------

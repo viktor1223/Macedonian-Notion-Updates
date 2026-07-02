@@ -26,7 +26,7 @@ load_dotenv()
 
 NOTION_API_VERSION = "2022-06-28"
 NOTION_BASE_URL = "https://api.notion.com/v1"
-OUTPUT_DIR = Path(__file__).parent / "output"
+OUTPUT_DIR = Path(__file__).parent.parent.parent / "output"
 
 # Properties we write back — Lesson  is intentionally excluded
 PUSH_PROPERTIES = {"Category", "Position in a sentence", "Level", "Lexical Frequency Band", "Lemma Family"}
@@ -36,7 +36,7 @@ PUSH_PROPERTIES = {"Category", "Position in a sentence", "Level", "Lexical Frequ
 # Helpers
 # ---------------------------------------------------------------------------
 
-from core.notion_client import get_token, headers  # shared Notion client
+from src.core.notion_client import get_token, headers  # shared Notion client
 
 
 def csv_value_to_multi_select(value: str) -> list[dict]:

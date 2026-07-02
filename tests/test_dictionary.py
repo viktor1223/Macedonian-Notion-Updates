@@ -1,4 +1,4 @@
-"""Tests for dictionary lookup from enrich_csv.py"""
+"""Tests for dictionary lookup from src.pipeline.enrich.py"""
 
 import sys
 from pathlib import Path
@@ -20,7 +20,7 @@ def test_dict_lookup_basic(tmp_path):
     dict_path.write_text(json.dumps(test_dict, ensure_ascii=False))
 
     # Monkeypatch the dictionary path
-    import enrich_csv
+    import src.pipeline.enrich as enrich_csv
     original_path = enrich_csv.DICTIONARY_PATH
     enrich_csv.DICTIONARY_PATH = dict_path
     enrich_csv._dictionary_cache = None  # Reset cache
@@ -53,7 +53,7 @@ def test_phrase_lookup_stop_words(tmp_path):
     dict_path = tmp_path / "test_dict.json"
     dict_path.write_text(json.dumps(test_dict, ensure_ascii=False))
 
-    import enrich_csv
+    import src.pipeline.enrich as enrich_csv
     original_path = enrich_csv.DICTIONARY_PATH
     enrich_csv.DICTIONARY_PATH = dict_path
     enrich_csv._dictionary_cache = None

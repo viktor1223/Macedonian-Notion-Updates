@@ -23,9 +23,9 @@ load_dotenv()
 DATABASE_ID = "31e2ef16fdf7821295f081b94e558d7e"
 NOTION_API_VERSION = "2022-06-28"
 NOTION_BASE_URL = "https://api.notion.com/v1"
-OUTPUT_DIR = Path(__file__).parent / "output"
+OUTPUT_DIR = Path(__file__).parent.parent.parent / "output"
 
-from core.notion_client import get_token, headers  # shared Notion client
+from src.core.notion_client import get_token, headers  # shared Notion client
 
 
 def fetch_existing_words(token: str) -> set[str]:

@@ -39,7 +39,7 @@ OUTPUT_DIR = Path(__file__).parent / "output"
 DEFAULT_THRESHOLD_PASS = 0.75
 DEFAULT_THRESHOLD_WARN = 0.50
 
-from core.romanize import romanize  # noqa: E402 — shared transliteration
+from src.core.romanize import romanize  # noqa: E402 — shared transliteration
 
 
 # ---------------------------------------------------------------------------

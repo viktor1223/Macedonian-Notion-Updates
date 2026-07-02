@@ -39,9 +39,9 @@ from pathlib import Path
 # Config
 # ---------------------------------------------------------------------------
 
-OUTPUT_DIR = Path(__file__).parent / "output"
-AUDIO_DIR = Path(__file__).parent / "audio"
-SOURCES_YAML = Path(__file__).parent / "audio_sources.yaml"
+OUTPUT_DIR = Path(__file__).parent.parent.parent / "output"
+AUDIO_DIR = Path(__file__).parent.parent.parent / "audio"
+SOURCES_YAML = Path(__file__).parent.parent.parent / "audio_sources.yaml"
 
 USER_AGENT = (
     "MacedonianVocabLearner/1.0 "
@@ -149,12 +149,12 @@ def load_cv_index() -> dict[str, dict]:
 
 def _check_local(word: str, output_dir: str) -> Path | None:
     """Check if audio file already exists on disk for this word."""
-    out_path = Path(__file__).parent / output_dir / f"{word}.wav"
+    out_path = Path(__file__).parent.parent.parent / output_dir / f"{word}.wav"
     if out_path.exists() and out_path.stat().st_size > 500:
         return out_path
     # Check suffixed variants
     for sfx in ("_extracted", "_cv", "_aligned"):
-        alt = Path(__file__).parent / output_dir / f"{word}{sfx}.wav"
+        alt = Path(__file__).parent.parent.parent / output_dir / f"{word}{sfx}.wav"
         if alt.exists() and alt.stat().st_size > 500:
             return alt
     return None
@@ -217,7 +217,7 @@ def _check_source(word: str, source: dict) -> dict | None:
     elif src_type == "index_extract":
         # Common Voice style: check if word is in the sentence index
         index_file = src_config.get("index_file", "audio/common_voice_word_index.csv")
-        index_path = Path(__file__).parent / index_file
+        index_path = Path(__file__).parent.parent.parent / index_file
         if not index_path.exists():
             return None
         # Scan index for the word (lazy — could cache, but fine for now)
@@ -812,7 +812,7 @@ def build_source_index(source_name: str, limit: int = 0):
     print(f"\n  Done: {processed} sentences → {len(word_index)} unique words")
 
     # Write index
-    out_path = Path(__file__).parent / index_file
+    out_path = Path(__file__).parent.parent.parent / index_file
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     fieldnames = ["word", "sentence", "audio_path", "source", "license", "status"]
