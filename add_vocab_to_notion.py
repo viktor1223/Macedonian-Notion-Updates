@@ -125,6 +125,17 @@ def create_page(token: str, word: str, row: dict) -> dict:
     if audio_source:
         properties["Audio Source"] = {"rich_text": [{"text": {"content": audio_source}}]}
 
+    # Audio File (external URL — playable in Notion)
+    audio_url = row.get("Audio URL", "").strip()
+    if audio_url:
+        properties["Audio File"] = {
+            "files": [{
+                "type": "external",
+                "name": f"{word}.wav",
+                "external": {"url": audio_url}
+            }]
+        }
+
     payload = {
         "parent": {"database_id": DATABASE_ID},
         "properties": properties,
