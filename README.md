@@ -114,6 +114,7 @@ See [docs/architecture.md](docs/architecture.md) for the design rationale.
 - [Pipeline overview](docs/pipeline.md) — how data flows end to end
 - [Architecture](docs/architecture.md) — why the code is organized this way
 - [Data sources and attribution](docs/data-sources.md) — licenses and credits
+- [Security](SECURITY.md) — how credentials are handled and kept out of the repo
 - [Contributing](CONTRIBUTING.md) — how to add features and run tests
 
 ## Audio hosting
