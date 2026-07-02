@@ -1,0 +1,154 @@
+# Audio Source Configuration
+# ──────────────────────────────────────────────────────────────────────
+# Sources are checked IN ORDER. First match wins for each word.
+# If no source has the exact word, the pipeline tries the lemma form
+# through the same source list again.
+#
+# To add a new source: append an entry with the required fields.
+# Types:
+#   - api_lookup:       Word → API call → direct download (e.g. Lingua Libre)
+#   - index_extract:    Word found in sentence index → forced alignment extraction
+#   - local_directory:  Word → check if file already exists on disk
+#
+# The MFCC cross-source verification runs automatically when a word
+# has audio from 2+ sources (regardless of which ones).
+# ──────────────────────────────────────────────────────────────────────
+
+sources:
+  - name: Lingua Libre
+    type: api_lookup
+    enabled: true
+    priority: 1
+    description: "Single-word recordings from Wikimedia Commons speakers"
+    license: CC-BY-SA 4.0
+    output_dir: audio/words
+    config:
+      api_url: https://commons.wikimedia.org/w/api.php
+      speakers:
+        - Bjankuloski06
+        - Jovan.kostov
+      filename_pattern: "LL-Q9296 (mkd)-{speaker}-{word}.wav"
+      min_file_size: 500
+      request_delay: 1.5
+      download_delay: 0.5
+
+  - name: Common Voice
+    type: index_extract
+    enabled: true
+    priority: 2
+    description: "Words extracted from sentences via MMS forced alignment"
+    license: CC-0
+    output_dir: audio/clips
+    config:
+      index_file: audio/common_voice_word_index.csv
+      word_column: word
+      sentence_column: sentence
+      audio_path_column: audio_path
+      dataset: "fsicoli/common_voice_17_0"
+      dataset_config: mk
+      min_confidence: 0.4
+      pad_seconds: 0.04
+
+  - name: FLEURS
+    type: index_extract
+    enabled: true
+    priority: 3
+    description: "Google's high-quality evaluation dataset — sentence extraction via forced alignment"
+    license: CC-BY 4.0
+    attribution_required: true
+    attribution_text: "Google FLEURS dataset (Conneau et al., 2022)"
+    output_dir: audio/fleurs_clips
+    config:
+      index_file: audio/fleurs_mk_word_index.csv
+      word_column: word
+      sentence_column: transcription
+      audio_path_column: audio_path
+      dataset: "google/fleurs"
+      dataset_config: mk_mk
+      min_confidence: 0.4
+      pad_seconds: 0.04
+
+  - name: VoxPopuli
+    type: index_extract
+    enabled: false  # Enable once index is built
+    priority: 4
+    description: "EU Parliament proceedings — long-form speech, word extraction via alignment"
+    license: CC-0
+    output_dir: audio/voxpopuli_clips
+    config:
+      index_file: audio/voxpopuli_mk_word_index.csv
+      word_column: word
+      sentence_column: sentence
+      audio_path_column: audio_path
+      dataset: "facebook/voxpopuli"
+      dataset_config: mk
+      min_confidence: 0.5
+      pad_seconds: 0.05
+
+  # ── Add new sources below ──────────────────────────────────────────
+  # Forvo: Avoid — CC-BY-NC-SA 3.0 + restrictive TOS (no bulk download)
+  # - name: Forvo
+  #   type: api_lookup
+  #   enabled: false
+  #   priority: 99
+  #   description: "Community pronunciation — RESTRICTIVE LICENSE, personal use only"
+  #   license: CC-BY-NC-SA 3.0
+  #   output_dir: audio/forvo
+  #   config:
+  #     api_url: https://apifree.forvo.com
+  #     api_key_env: FORVO_API_KEY
+  #     language: mk
+
+  # Example: Local recordings you make yourself
+  # - name: Self Recorded
+  #   type: local_directory
+  #   enabled: false
+  #   priority: 10
+  #   description: "My own recordings"
+  #   license: personal
+  #   output_dir: audio/self
+  #   config:
+  #     file_pattern: "{word}.wav"
+
+# ── Lemmatization config ─────────────────────────────────────────────
+lemmatization:
+  enabled: true
+  # Only try lemma if the exact word wasn't found in ANY source above
+  strategy: suffix_strip
+  # Suffixes tried longest-first; word must be longer than suffix + 1 char
+  suffixes:
+    - увавме
+    - увавте
+    - уваат
+    - овите
+    - евите
+    - увањ
+    - ував
+    - ите
+    - ува
+    - аме
+    - ете
+    - ови
+    - еви
+    - та
+    - то
+    - те
+    - ов
+    - ев
+    - ам
+    - еш
+    - е
+    - а
+    - и
+    - у
+
+# ── Verification config ──────────────────────────────────────────────
+verification:
+  enabled: true
+  # Cross-source MFCC comparison threshold (0-1)
+  cross_source_threshold: 0.70
+  # Duration heuristics
+  min_duration_per_char: 0.04
+  max_duration_per_char: 0.25
+  # Short words (≤3 chars) get relaxed duration threshold (multiplier)
+  short_word_tolerance: 1.5

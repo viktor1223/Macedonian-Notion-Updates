@@ -1,0 +1,34 @@
+# Secrets
+.env
+
+# Output artifacts (regeneratable, timestamped)
+output/
+
+# Corpora (large, downloadable)
+corpora/
+
+# Audio files (large binary, regeneratable)
+audio/clips/
+audio/words/
+audio/lemmas/
+audio/samples/
+audio/*.wav
+audio/*.mp3
+audio/*.ogg
+
+# Large source files (downloadable)
+sources/dictionaries/mk_kaikki_dictionary.json
+sources/dictionaries/mk_english_reverse_index.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+*.swp
