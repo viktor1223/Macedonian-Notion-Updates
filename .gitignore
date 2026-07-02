@@ -1,5 +1,19 @@
-# Secrets
+# Secrets — never commit credentials of any kind
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*_rsa
+*_rsa.pub
+credentials.json
+secrets.json
+service-account*.json
+.azure/
+.aws/
+azureauth*.json
 
 # Output artifacts (regeneratable, timestamped)
 output/
