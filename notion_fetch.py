@@ -23,9 +23,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_ID = "31e2ef16fdf7821295f081b94e558d7e"
-NOTION_API_VERSION = "2022-06-28"
-NOTION_BASE_URL = "https://api.notion.com/v1"
+from core.notion_client import get_token, query_database, DATABASE_ID  # shared Notion client
+
 OUTPUT_DIR = Path(__file__).parent / "output"
 
 
@@ -133,32 +132,7 @@ def fetch_all_pages(token: str, database_id: str) -> list[dict]:
     Query the database via the Notion REST API, handling pagination automatically.
     Returns a list of raw page objects.
     """
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Notion-Version": NOTION_API_VERSION,
-        "Content-Type": "application/json",
-    }
-    url = f"{NOTION_BASE_URL}/databases/{database_id}/query"
-    pages = []
-    cursor = None
-
-    while True:
-        payload = {"page_size": 100}
-        if cursor:
-            payload["start_cursor"] = cursor
-
-        resp = requests.post(url, headers=headers, json=payload)
-        resp.raise_for_status()
-        data = resp.json()
-
-        pages.extend(data.get("results", []))
-
-        if data.get("has_more"):
-            cursor = data.get("next_cursor")
-        else:
-            break
-
-    return pages
+    return query_database(token=token, database_id=database_id)
 
 
 # ---------------------------------------------------------------------------
