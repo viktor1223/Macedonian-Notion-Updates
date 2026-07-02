@@ -1,0 +1,37 @@
+[project]
+name = "macedonian-vocab"
+version = "1.0.0"
+description = "Macedonian vocabulary learning pipeline: dictionary enrichment, human audio extraction, Notion integration"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Viktor Ciroski"}]
+
+dependencies = [
+    "requests>=2.28",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "soundfile>=0.12",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+audio = [
+    "torch>=2.0",
+    "torchaudio>=2.0",
+    "datasets>=2.14",
+]
+ai = [
+    "openai>=1.0",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
