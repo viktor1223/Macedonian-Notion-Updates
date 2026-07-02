@@ -36,19 +36,7 @@ PUSH_PROPERTIES = {"Category", "Position in a sentence", "Level", "Lexical Frequ
 # Helpers
 # ---------------------------------------------------------------------------
 
-def get_token() -> str:
-    token = os.getenv("NOTION_TOKEN")
-    if not token:
-        raise EnvironmentError("NOTION_TOKEN not set in .env")
-    return token
-
-
-def headers(token: str) -> dict:
-    return {
-        "Authorization": f"Bearer {token}",
-        "Notion-Version": NOTION_API_VERSION,
-        "Content-Type": "application/json",
-    }
+from core.notion_client import get_token, headers  # shared Notion client
 
 
 def csv_value_to_multi_select(value: str) -> list[dict]:

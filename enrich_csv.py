@@ -473,11 +473,7 @@ def classify(client: OpenAI, english: str, macedonian: str) -> dict:
 # CSV helpers
 # ---------------------------------------------------------------------------
 
-def latest_export() -> Path:
-    exports = sorted(OUTPUT_DIR.glob("notion_export_*.csv"))
-    if not exports:
-        raise FileNotFoundError(f"No notion_export_*.csv found in {OUTPUT_DIR}")
-    return exports[-1]
+from core.files import latest_export  # noqa: E402 — shared file finder
 
 
 def list_to_notion_string(items: list) -> str:

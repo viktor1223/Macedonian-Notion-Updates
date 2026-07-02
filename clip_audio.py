@@ -43,22 +43,7 @@ OUTPUT_DIR = Path(__file__).parent / "output"
 MIN_CONFIDENCE = 0.4  # minimum alignment confidence to accept a clip
 PAD_SECONDS = 0.04  # padding around extracted word (40ms each side)
 
-# Macedonian Cyrillic → Latin romanization for MMS model
-MK_TO_ROMAN = {
-    'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'ѓ': 'gj', 'е': 'e',
-    'ж': 'zh', 'з': 'z', 'ѕ': 'dz', 'и': 'i', 'ј': 'j', 'к': 'k', 'л': 'l',
-    'љ': 'lj', 'м': 'm', 'н': 'n', 'њ': 'nj', 'о': 'o', 'п': 'p', 'р': 'r',
-    'с': 's', 'т': 't', 'ќ': 'kj', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'c',
-    'ч': 'ch', 'џ': 'dzh', 'ш': 'sh',
-}
-
-
-def romanize(text: str) -> str:
-    """Transliterate Macedonian Cyrillic to Latin for MMS alignment."""
-    return ''.join(
-        MK_TO_ROMAN.get(c, c if c.isascii() and c.isalpha() else '')
-        for c in text.lower()
-    )
+from core.romanize import romanize  # noqa: E402 — shared transliteration
 
 
 # ---------------------------------------------------------------------------

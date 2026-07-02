@@ -25,20 +25,7 @@ NOTION_API_VERSION = "2022-06-28"
 NOTION_BASE_URL = "https://api.notion.com/v1"
 OUTPUT_DIR = Path(__file__).parent / "output"
 
-
-def get_token() -> str:
-    token = os.getenv("NOTION_TOKEN")
-    if not token:
-        raise EnvironmentError("NOTION_TOKEN not set in .env")
-    return token
-
-
-def headers(token: str) -> dict:
-    return {
-        "Authorization": f"Bearer {token}",
-        "Notion-Version": NOTION_API_VERSION,
-        "Content-Type": "application/json",
-    }
+from core.notion_client import get_token, headers  # shared Notion client
 
 
 def fetch_existing_words(token: str) -> set[str]:
